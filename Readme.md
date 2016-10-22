@@ -1,6 +1,6 @@
 ![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
 
-![OLED Switch Click](http://libstock.mikroe.com/img/projects/21707/1936/1477047150_ecg-clic_thumb.jpg)
+![ECG Click](http://libstock.mikroe.com/img/projects/21707/1936/1477047150_ecg-clic_thumb.jpg)
 
 ---
 [Product Page](http://www.mikroe.com/click/ecg/)

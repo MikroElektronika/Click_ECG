@@ -1,17 +1,22 @@
 ![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
 
-![OLED Switch Click](http://libstock.mikroe.com/img/projects/21707/1936/1477047150_ecg-clic_thumb.jpg)
+![MikroPlot](http://cdn.mikroe.com/knowlegebase/uploads/2016/10/21104444/mikroplot-banner.png)
 
 ---
-[Product Page](http://www.mikroe.com/click/ecg/)
-
-[Documentation](http://docs.mikroe.com/ECG_click)
 
 [Tutorial] (http://learn.mikroe.com/ecg-click-mikroplot-complete-solution-human-heart-data-analysis/)
 
 ---
 
 ### General Description
-This is an ECG (or EKG) machine on a click board. It measures the electrical activity of a beating heart through electrodes taped to the skin. It requires little setup, and the final measurement results can be displayed as an Electrocardiogram using a free PC app.
+MikroPlot is a graph generator. It’s a simple tool to help you visualize sensor data recorded over time. It’s suitable for bio signals (ECG, EEG, EMG) as well as environmental data logging (temperature, humidity etc). The app can receive data sets directly from a microcontroller through a UART-USB connection.
+
+Screenshot of the applicationa at work
+
+[Screenshot] (http://cdn.mikroe.com/knowlegebase/uploads/2016/10/21094132/mikroplot_screenshot.png)
+
+About
+
+[About] (mikroplot-about.png)
 
 ---
