@@ -13,10 +13,10 @@ MikroPlot is a graph generator. It’s a simple tool to help you visualize senso
 
 Screenshot of the applicationa at work
 
-[Screenshot] (http://cdn.mikroe.com/knowlegebase/uploads/2016/10/21094132/mikroplot_screenshot.png)
+![Screenshot] (http://cdn.mikroe.com/knowlegebase/uploads/2016/10/21094132/mikroplot_screenshot.png)
 
 About
 
-[About] (mikroplot-about.png)
+![About] (mikroplot-about.png)
 
 ---
