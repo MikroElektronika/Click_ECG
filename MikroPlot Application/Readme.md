@@ -11,7 +11,7 @@
 ### General Description
 MikroPlot is a graph generator. It’s a simple tool to help you visualize sensor data recorded over time. It’s suitable for bio signals (ECG, EEG, EMG) as well as environmental data logging (temperature, humidity etc). The app can receive data sets directly from a microcontroller through a UART-USB connection.
 
-Screenshot of the applicationa at work
+Screenshot of the application at work
 
 ![Screenshot] (http://cdn.mikroe.com/knowlegebase/uploads/2016/10/21094132/mikroplot_screenshot.png)
 
