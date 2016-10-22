@@ -1,0 +1,33 @@
+main
+	__CC2DW
+	ADC1_Init
+	UART5_Init
+		Get_Fosc_kHz
+		UART_Calc_BRG
+	Button
+		Delay_500us
+	UART5_Write_Text
+		UART5_Write
+	InitTimer1
+	ADC1_Get_Sample
+	_Unsigned32IntToFloat
+		_SignedIntegralToFLoat
+		_UnsignedIntegralToFloat
+	_Mul_FP
+	IntToStr
+		WordToStr
+	FloatToStr
+		strcpy
+		_Compare_FP
+		_Mul_FP
+	strcat
+	Ltrim
+	UART_Write_Text
+		UART_Write
+			UART1_Write
+			UART2_Write
+			UART3_Write
+			UART4_Write
+			UART5_Write
+			UART6_Write
+Timer1Interrupt

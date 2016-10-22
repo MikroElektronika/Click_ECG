@@ -1,0 +1,194 @@
+_InitTimer1:
+  begin   (midx: 0)
+//ekg_firmware.c,4 :: 		void InitTimer1(){
+_InitTimer1:
+  begin   (midx: 0)
+//ekg_firmware.c,5 :: 		T1CON                 = 0x8010;
+	R2 <4> <- 32784   (midx: 0)
+	T1CON <4> <- R2   (midx: 0)
+//ekg_firmware.c,6 :: 		T1IP0_bit         = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IP0_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,7 :: 		T1IP1_bit         = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IP1_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,8 :: 		T1IP2_bit         = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IP2_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,9 :: 		T1IF_bit         = 0;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IF_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,10 :: 		T1IE_bit         = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IE_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,11 :: 		PR1                 = 39000;
+	R2 <4> <- 39000   (midx: 0)
+	PR1 <4> <- R2   (midx: 0)
+//ekg_firmware.c,12 :: 		TMR1                 = 0;
+	TMR1 <4> <- 0   (midx: 0)
+  end
+   (midx: 0)
+_main:
+  begin   (midx: 0)
+//ekg_firmware.c,21 :: 		void main()
+_main:
+  begin   (midx: 0)
+//ekg_firmware.c,23 :: 		uint32_t i = 0;
+   (midx: 0)
+//ekg_firmware.c,27 :: 		TRISB8_bit =  1;              // Set A15 and B8 pins as input
+	R2 <1> <- 1   (midx: 0)
+	LX(TRISB8_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,28 :: 		TRISA15_bit = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(TRISA15_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,29 :: 		ad1pcfg = 0x0100;
+	R2 <4> <- 256   (midx: 0)
+	AD1PCFG <4> <- R2   (midx: 0)
+//ekg_firmware.c,30 :: 		ADC1_Init();
+	CALL _ADC1_Init   (midx: 0)
+//ekg_firmware.c,32 :: 		UART5_Init(57600);
+	R25 <4> <- 57600   (midx: 0)
+	CALL _UART5_Init   (midx: 0)
+//ekg_firmware.c,33 :: 		delay_ms(500);
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 2)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+//ekg_firmware.c,35 :: 		while(1)
+1:   (midx: 0)
+//ekg_firmware.c,38 :: 		if (Button(&PORTA, 15, 10, 1))
+	R28 <2> <- 1   (midx: 0)
+	R27 <2> <- 10   (midx: 0)
+	R26 <2> <- 15   (midx: 0)
+	R25 <4> <- #PORTA   (midx: 0)
+	CALL _Button   (midx: 0)
+	if (!R2) then goto 3   (midx: 0)
+//ekg_firmware.c,40 :: 		Uart5_Write_Text("START\r\n");
+	R25 <4> <- #?lstr1_ekg_firmware   (midx: 0)
+	CALL _UART5_Write_Text   (midx: 0)
+//ekg_firmware.c,41 :: 		delay_ms(500);
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 2)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 5)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+	asm: -1   (midx: 1)
+//ekg_firmware.c,42 :: 		InitTimer1();
+	CALL _InitTimer1   (midx: 0)
+//ekg_firmware.c,43 :: 		EnableInterrupts();
+	asm: -1   (midx: 0)
+//ekg_firmware.c,44 :: 		}
+3:   (midx: 0)
+//ekg_firmware.c,46 :: 		if (read_flag == true)
+	R3 <1> <- ekg_firmware_read_flag   (midx: 0)
+	R2 <4> <- 1   (midx: 0)
+	if ( R3 != R2) then goto 5   (midx: 0)
+//ekg_firmware.c,48 :: 		T1IE_bit         = 0;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IE_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,49 :: 		adc_reads    =  ADC1_Get_Sample(8);
+	R25 <2> <- 8   (midx: 0)
+	CALL _ADC1_Get_Sample   (midx: 0)
+	R2 <4> <- R2   (midx: 0)
+	_adc_reads <4> <- R2   (midx: 0)
+//ekg_firmware.c,50 :: 		timer_reads  =  ((double)interrupt_ctr)*3.9;
+	R2 <4> <- (type cast)ekg_firmware_interrupt_ctr   (midx: 0)
+	R4 <4> <- 3.900000E+000   (midx: 0)
+	R2 <4> <-  R2 * R4   (midx: 9)
+	_timer_reads <4> <- R2   (midx: 0)
+//ekg_firmware.c,51 :: 		inttostr(adc_reads, final_string);
+	R2 <4> <- addr(main_final_string_L0)   (midx: 0)
+	R26 <4> <- R2   (midx: 0)
+	R25 <2> <- _adc_reads   (midx: 0)
+	CALL _IntToStr   (midx: 0)
+//ekg_firmware.c,52 :: 		floattostr(timer_reads, timer_read_string);
+	R2 <4> <- addr(main_timer_read_string_L0)   (midx: 0)
+	R26 <4> <- R2   (midx: 0)
+	R25 <4> <- _timer_reads   (midx: 0)
+	CALL _FloatToStr   (midx: 0)
+//ekg_firmware.c,53 :: 		strcat(final_string, ",");
+	R2 <4> <- addr(main_final_string_L0)   (midx: 0)
+	R26 <4> <- #?lstr2_ekg_firmware   (midx: 0)
+	R25 <4> <- R2   (midx: 0)
+	CALL _strcat   (midx: 0)
+//ekg_firmware.c,54 :: 		strcat(final_string, timer_read_string);
+	R3 <4> <- addr(main_timer_read_string_L0)   (midx: 0)
+	R2 <4> <- addr(main_final_string_L0)   (midx: 0)
+	R26 <4> <- R3   (midx: 0)
+	R25 <4> <- R2   (midx: 0)
+	CALL _strcat   (midx: 0)
+//ekg_firmware.c,55 :: 		ltrim(final_string);
+	R2 <4> <- addr(main_final_string_L0)   (midx: 0)
+	R25 <4> <- R2   (midx: 0)
+	CALL _Ltrim   (midx: 0)
+//ekg_firmware.c,56 :: 		Uart_Write_Text(final_string);
+	R2 <4> <- addr(main_final_string_L0)   (midx: 0)
+	R25 <4> <- R2   (midx: 0)
+	CALL _UART_Write_Text   (midx: 0)
+//ekg_firmware.c,57 :: 		Uart_Write_Text("\r\n");
+	R25 <4> <- #?lstr3_ekg_firmware   (midx: 0)
+	CALL _UART_Write_Text   (midx: 0)
+//ekg_firmware.c,58 :: 		read_flag = false;
+	ekg_firmware_read_flag <1> <- 0   (midx: 0)
+//ekg_firmware.c,59 :: 		T1IE_bit  = 1;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IE_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,60 :: 		}
+5:   (midx: 0)
+//ekg_firmware.c,62 :: 		if (seconds_counter == 15)
+	R3 <4> <- ekg_firmware_seconds_counter   (midx: 0)
+	R2 <4> <- 15   (midx: 0)
+	if ( R3 != R2) then goto 6   (midx: 2)
+//ekg_firmware.c,64 :: 		T1IE_bit = 0; // disable global interrupts
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IE_bit) <1> <- R2   (midx: 0)
+//ekg_firmware.c,65 :: 		Uart_Write_Text("END\r\n");
+	R25 <4> <- #?lstr4_ekg_firmware   (midx: 0)
+	CALL _UART_Write_Text   (midx: 0)
+//ekg_firmware.c,66 :: 		while(1);
+7:   (midx: 0)
+	goto	7   (midx: 0)
+//ekg_firmware.c,67 :: 		}
+6:   (midx: 0)
+//ekg_firmware.c,69 :: 		}
+	goto	1   (midx: 0)
+  end
+   (midx: 0)
+_Timer1Interrupt:
+  begin   (midx: 0)
+//ekg_firmware.c,74 :: 		void Timer1Interrupt() iv IVT_TIMER_1 ilevel 7 ics ICS_SRS
+_Timer1Interrupt:
+  begin   (midx: 0)
+//ekg_firmware.c,76 :: 		read_flag = true;
+	R2 <1> <- 1   (midx: 0)
+	ekg_firmware_read_flag <1> <- R2   (midx: 0)
+//ekg_firmware.c,78 :: 		interrupt_ctr++;
+	R2 <4> <- ekg_firmware_interrupt_ctr   (midx: 0)
+	R2 <4> <-  R2 + 1   (midx: 2)
+	ekg_firmware_interrupt_ctr <4> <- R2   (midx: 0)
+//ekg_firmware.c,79 :: 		if (interrupt_ctr % 256 == 0)
+	R2 <4> <- ekg_firmware_interrupt_ctr   (midx: 0)
+	R2 <4> <-  R2 & 255   (midx: 2)
+	if ( R2 != 0) then goto 9   (midx: 2)
+//ekg_firmware.c,80 :: 		seconds_counter++;
+	R2 <4> <- ekg_firmware_seconds_counter   (midx: 0)
+	R2 <4> <-  R2 + 1   (midx: 2)
+	ekg_firmware_seconds_counter <4> <- R2   (midx: 0)
+9:   (midx: 0)
+//ekg_firmware.c,82 :: 		T1IF_bit = 0;
+	R2 <1> <- 1   (midx: 0)
+	LX(T1IF_bit) <1> <- R2   (midx: 0)
+  end
+   (midx: 0)
