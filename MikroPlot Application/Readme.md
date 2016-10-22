@@ -17,6 +17,6 @@ Screenshot of the application at work
 
 About
 
-![About] (mikroplot-about.png)
+![About] (/home/viktor/Pictures/mikroplot-about.png)
 
 ---
