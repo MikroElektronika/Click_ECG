@@ -45,15 +45,14 @@ BX	LR
 ; end of _InitTimer2
 _main:
 ;ekg_firmware.c,22 :: 		void main()
-SUB	SP, SP, #32
+SUB	SP, SP, #40
 ;ekg_firmware.c,24 :: 		uint16_t adc_read = 0;
 ;ekg_firmware.c,26 :: 		uint32_t i = 0;
 ;ekg_firmware.c,30 :: 		temp_adc_read = temp_timer_read = 0;
-MOV	R0, #0
-VMOV	S0, R0
+MOV	R1, #0
 MOVW	R0, #lo_addr(_temp_timer_read+0)
 MOVT	R0, #hi_addr(_temp_timer_read+0)
-VSTR	#1, S0, [R0, #0]
+STR	R1, [R0, #0]
 MOV	R1, #0
 MOVW	R0, #lo_addr(_temp_adc_read+0)
 MOVT	R0, #hi_addr(_temp_adc_read+0)
@@ -72,14 +71,13 @@ BL	_GPIO_Digital_Input+0
 MOVW	R0, #57600
 BL	_UART1_Init+0
 ;ekg_firmware.c,37 :: 		delay_ms(500);
-MOVW	R7, #2515
-MOVT	R7, #356
+MOVW	R7, #36223
+MOVT	R7, #91
 NOP
 NOP
 L_main0:
 SUBS	R7, R7, #1
 BNE	L_main0
-NOP
 NOP
 NOP
 NOP
@@ -89,13 +87,14 @@ BL	_ADC_Set_Input_Channel+0
 ;ekg_firmware.c,42 :: 		ADC1_Init();
 BL	_ADC1_Init+0
 ;ekg_firmware.c,43 :: 		Delay_ms(100);
-MOVW	R7, #13609
-MOVT	R7, #71
+MOVW	R7, #20351
+MOVT	R7, #18
 NOP
 NOP
 L_main2:
 SUBS	R7, R7, #1
 BNE	L_main2
+NOP
 NOP
 NOP
 ;ekg_firmware.c,45 :: 		while(1)
@@ -119,14 +118,13 @@ BL	_InitTimer2+0
 ;ekg_firmware.c,51 :: 		EnableInterrupts();
 BL	_EnableInterrupts+0
 ;ekg_firmware.c,52 :: 		delay_ms(500);
-MOVW	R7, #2515
-MOVT	R7, #356
+MOVW	R7, #36223
+MOVT	R7, #91
 NOP
 NOP
 L_main7:
 SUBS	R7, R7, #1
 BNE	L_main7
-NOP
 NOP
 NOP
 NOP
@@ -144,34 +142,34 @@ BL	_DisableInterrupts+0
 ;ekg_firmware.c,59 :: 		temp_adc_read = ADC1_Get_Sample(4);
 MOVS	R0, #4
 BL	_ADC1_Get_Sample+0
-MOVW	R2, #lo_addr(_temp_adc_read+0)
-MOVT	R2, #hi_addr(_temp_adc_read+0)
-STR	R0, [R2, #0]
+MOVW	R1, #lo_addr(_temp_adc_read+0)
+MOVT	R1, #hi_addr(_temp_adc_read+0)
+STR	R1, [SP, #36]
+STR	R0, [R1, #0]
 ;ekg_firmware.c,60 :: 		temp_timer_read = interrupt_ctr*3.9;
 MOVW	R0, #lo_addr(ekg_firmware_interrupt_ctr+0)
 MOVT	R0, #hi_addr(ekg_firmware_interrupt_ctr+0)
-VLDR	#1, S0, [R0, #0]
-VCVT.F32	#0, S1, S0
-MOVW	R0, #39322
-MOVT	R0, #16505
-VMOV	S0, R0
-VMUL.F32	S0, S1, S0
-MOVW	R0, #lo_addr(_temp_timer_read+0)
-MOVT	R0, #hi_addr(_temp_timer_read+0)
-VSTR	#1, S0, [R0, #0]
+LDR	R0, [R0, #0]
+BL	__UnsignedIntegralToFloat+0
+MOVW	R2, #39322
+MOVT	R2, #16505
+BL	__Mul_FP+0
+MOVW	R1, #lo_addr(_temp_timer_read+0)
+MOVT	R1, #hi_addr(_temp_timer_read+0)
+STR	R0, [R1, #0]
 ;ekg_firmware.c,61 :: 		inttostr(temp_adc_read, final_string);
-ADD	R1, SP, #10
-MOV	R0, R2
+ADD	R1, SP, #14
+LDR	R0, [SP, #36]
 LDR	R0, [R0, #0]
 BL	_IntToStr+0
 ;ekg_firmware.c,62 :: 		sprintf(timer_read_string,"%.2f", temp_timer_read);
 MOVW	R0, #lo_addr(_temp_timer_read+0)
 MOVT	R0, #hi_addr(_temp_timer_read+0)
-VLDR	#1, S0, [R0, #0]
+LDR	R2, [R0, #0]
 MOVW	R1, #lo_addr(?lstr_2_ekg_firmware+0)
 MOVT	R1, #hi_addr(?lstr_2_ekg_firmware+0)
-ADD	R0, SP, #0
-VPUSH	#0, (S0)
+ADD	R0, SP, #4
+PUSH	(R2)
 PUSH	(R1)
 PUSH	(R0)
 BL	_sprintf+0
@@ -179,17 +177,17 @@ ADD	SP, SP, #12
 ;ekg_firmware.c,63 :: 		strcat(final_string, ",");
 MOVW	R1, #lo_addr(?lstr3_ekg_firmware+0)
 MOVT	R1, #hi_addr(?lstr3_ekg_firmware+0)
-ADD	R0, SP, #10
+ADD	R0, SP, #14
 BL	_strcat+0
 ;ekg_firmware.c,64 :: 		strcat(final_string, timer_read_string);
-ADD	R1, SP, #0
-ADD	R0, SP, #10
+ADD	R1, SP, #4
+ADD	R0, SP, #14
 BL	_strcat+0
 ;ekg_firmware.c,65 :: 		ltrim(final_string);
-ADD	R0, SP, #10
+ADD	R0, SP, #14
 BL	_Ltrim+0
 ;ekg_firmware.c,66 :: 		Uart_Write_Text(final_string);
-ADD	R0, SP, #10
+ADD	R0, SP, #14
 BL	_UART_Write_Text+0
 ;ekg_firmware.c,67 :: 		Uart_Write_Text("\r\n");
 MOVW	R0, #lo_addr(?lstr4_ekg_firmware+0)
@@ -213,33 +211,30 @@ IT	NE
 BNE	L_main10
 ;ekg_firmware.c,74 :: 		DisableInterrupts();
 BL	_DisableInterrupts+0
-;ekg_firmware.c,76 :: 		Uart1_Write_Text("END\r\n");
-MOVW	R0, #lo_addr(?lstr5_ekg_firmware+0)
-MOVT	R0, #hi_addr(?lstr5_ekg_firmware+0)
-BL	_UART1_Write_Text+0
-;ekg_firmware.c,77 :: 		while(1);
+;ekg_firmware.c,78 :: 		while(1);
 L_main11:
 IT	AL
 BAL	L_main11
-;ekg_firmware.c,78 :: 		}
+;ekg_firmware.c,79 :: 		}
 L_main10:
-;ekg_firmware.c,80 :: 		}
+;ekg_firmware.c,81 :: 		}
 IT	AL
 BAL	L_main4
-;ekg_firmware.c,83 :: 		}
+;ekg_firmware.c,84 :: 		}
 L_end_main:
 L__main_end_loop:
 B	L__main_end_loop
 ; end of _main
 _Timer2_interrupt:
-;ekg_firmware.c,85 :: 		void Timer2_interrupt() iv IVT_INT_TIM2
-;ekg_firmware.c,88 :: 		TIM2_SR.UIF = 0;
+;ekg_firmware.c,86 :: 		void Timer2_interrupt() iv IVT_INT_TIM2
+SUB	SP, SP, #4
+;ekg_firmware.c,89 :: 		TIM2_SR.UIF = 0;
 MOVS	R1, #0
 SXTB	R1, R1
 MOVW	R0, #lo_addr(TIM2_SR+0)
 MOVT	R0, #hi_addr(TIM2_SR+0)
 STR	R1, [R0, #0]
-;ekg_firmware.c,89 :: 		interrupt_ctr++;
+;ekg_firmware.c,90 :: 		interrupt_ctr++;
 MOVW	R0, #lo_addr(ekg_firmware_interrupt_ctr+0)
 MOVT	R0, #hi_addr(ekg_firmware_interrupt_ctr+0)
 LDR	R0, [R0, #0]
@@ -247,7 +242,7 @@ ADDS	R1, R0, #1
 MOVW	R0, #lo_addr(ekg_firmware_interrupt_ctr+0)
 MOVT	R0, #hi_addr(ekg_firmware_interrupt_ctr+0)
 STR	R1, [R0, #0]
-;ekg_firmware.c,90 :: 		if (interrupt_ctr % 256 == 0)
+;ekg_firmware.c,91 :: 		if (interrupt_ctr % 256 == 0)
 MOVW	R0, #lo_addr(ekg_firmware_interrupt_ctr+0)
 MOVT	R0, #hi_addr(ekg_firmware_interrupt_ctr+0)
 LDR	R0, [R0, #0]
@@ -255,7 +250,7 @@ AND	R0, R0, #255
 CMP	R0, #0
 IT	NE
 BNE	L_Timer2_interrupt13
-;ekg_firmware.c,91 :: 		seconds_counter++;
+;ekg_firmware.c,92 :: 		seconds_counter++;
 MOVW	R0, #lo_addr(ekg_firmware_seconds_counter+0)
 MOVT	R0, #hi_addr(ekg_firmware_seconds_counter+0)
 LDR	R0, [R0, #0]
@@ -264,12 +259,13 @@ MOVW	R0, #lo_addr(ekg_firmware_seconds_counter+0)
 MOVT	R0, #hi_addr(ekg_firmware_seconds_counter+0)
 STR	R1, [R0, #0]
 L_Timer2_interrupt13:
-;ekg_firmware.c,92 :: 		read_flag = true;
+;ekg_firmware.c,93 :: 		read_flag = true;
 MOVS	R1, #1
 MOVW	R0, #lo_addr(ekg_firmware_read_flag+0)
 MOVT	R0, #hi_addr(ekg_firmware_read_flag+0)
 STRB	R1, [R0, #0]
-;ekg_firmware.c,94 :: 		}
+;ekg_firmware.c,95 :: 		}
 L_end_Timer2_interrupt:
+ADD	SP, SP, #4
 BX	LR
 ; end of _Timer2_interrupt

@@ -73,7 +73,8 @@ void main()
              {
                 DisableInterrupts();
 
-                Uart1_Write_Text("END\r\n");
+//                Uart1_Write_Text("END\r\n");   // this line is no longer needed for the application, it can be used for debugging purposes
+                                                 // if the data is being monitored on a serial terminal
                 while(1);
              }
 

@@ -9,13 +9,12 @@ main
 			RCC_GetClocksFrequency
 				Get_Fosc_kHz
 			GPIO_Alternate_Function_Enable
-				GPIO_Config_Pin_Alternate_Function
+				GPIO_Configure_Pin
 					GPIO_Config
 	ADC_Set_Input_Channel
 		GPIO_Analog_Input
 	ADC1_Init
 		ADCx_Init
-			RCC_GetClocksFrequency
 	Button
 		Delay_500us
 	UART1_Write_Text
@@ -33,8 +32,19 @@ main
 	sprintf
 		_doprntf
 			isdigit
+			_Compare_FP
 			scale
+				_Mul_FP
+			_Mul_FP
+			_Div_FP
+			_FloatToUnsignedIntegral
+				_FloatToSignedIntegral
+			_UnsignedIntegralToFloat
+			_Sub_FP
+			_Add_FP
 			fround
+				_Mul_FP
+			_FloatToSignedIntegral
 	strcat
 	Ltrim
 	UART_Write_Text
@@ -49,8 +59,8 @@ main
 				UARTx_Write
 			UART5_Write
 				UARTx_Write
-			UART6_Write
-				UARTx_Write
 	__CC2DW
 	__FillZeros
+	_UnsignedIntegralToFloat
+	_Mul_FP
 Timer2_interrupt

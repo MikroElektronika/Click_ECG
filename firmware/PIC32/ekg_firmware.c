@@ -61,8 +61,10 @@ void main()
 
              if (seconds_counter == 15)                  // after 15 seconds of measuring is done, send the END string and finish
              {
-                T1IE_bit = 0; // disable global interrupts
-                Uart_Write_Text("END\r\n");
+                T1IE_bit = 0;                            // disable global interrupts
+                
+//                Uart_Write_Text("END\r\n");            // this line is no longer needed for the application, it can be used for debugging purposes,
+                                                         // if the data is being monitored on a serial terminal
                 while(1);
              }
 

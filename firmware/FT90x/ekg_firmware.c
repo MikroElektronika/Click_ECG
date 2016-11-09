@@ -73,10 +73,12 @@ void main()
                     read_flag = false;
              }
 
-             if (seconds_counter == 15)       // after 15 seconds of measuring is done, send the END string and finish
+             if (seconds_counter == 15)                     // after 15 seconds of measuring is done, send the END string and finish
              {
-                IRQ_CTRL.B31 = 1; // disable global interrupts
-                Uart_Write_Text("END\r\n");
+                IRQ_CTRL.B31 = 1;                           // disable global interrupts
+                
+//                Uart_Write_Text("END\r\n");               // this line is no longer needed for the application, it can be used for debugging purposes
+                                                            // if the data is being monitored on a serial terminal
                 while(1);
              }
 

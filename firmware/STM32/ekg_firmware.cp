@@ -1,4 +1,4 @@
-#line 1 "C:/Users/Viktor/Desktop/EKG_PROJECT/Firmware/STM32/ekg_firmware.c"
+#line 1 "C:/Users/Viktor/Desktop/EKG_PROJECT/novi_firmware/STM32/ekg_firmware.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/stdint.h"
 
 
@@ -54,7 +54,7 @@ typedef unsigned long long uintmax_t;
 
  typedef char _Bool;
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/built_in.h"
-#line 5 "C:/Users/Viktor/Desktop/EKG_PROJECT/Firmware/STM32/ekg_firmware.c"
+#line 5 "C:/Users/Viktor/Desktop/EKG_PROJECT/novi_firmware/STM32/ekg_firmware.c"
 void InitTimer2(){
  RCC_APB1ENR.TIM2EN = 1;
  TIM2_CR1.CEN = 0;
@@ -126,7 +126,8 @@ void main()
  {
  DisableInterrupts();
 
- Uart1_Write_Text("END\r\n");
+
+
  while(1);
  }
 
